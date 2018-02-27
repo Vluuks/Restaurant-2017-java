@@ -1,5 +1,8 @@
 package com.example.gebruiker.restaurantapp;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,23 +20,34 @@ import java.util.ArrayList;
 
 public class RestaurantApiHelper {
 
+    private String TAG = "RestaurantApi";
+
+    public ResponseCallback delegate;
+    private Context context;
+
+    public RestaurantApiHelper(Context context) {
+        this.delegate = (ResponseCallback) context;
+        this.context = context;
+    }
+
     public void getEntrees() {
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com";
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url ="https://resto.mprog.nl/menu?category=entrees";
 
-// Request a string response from the provided URL.
+        // Request a string response from the provided URL.
         JsonResponseListener listener = new JsonResponseListener();
         JsonObjectRequest stringRequest = new JsonObjectRequest(url, null, listener, listener);
 
-
+        queue.add(stringRequest);
     }
 
     private class JsonResponseListener implements Response.Listener<JSONObject>, Response.ErrorListener {
         @Override
         public void onResponse(JSONObject response) {
-
+            delegate.onResponseSuccess();
+            Log.d(TAG, "success" + response);
         }
 
         @Override

@@ -5,5 +5,5 @@ package com.example.gebruiker.restaurantapp;
  */
 
 public interface ResponseCallback {
-    public abstract void onResponseSuccess();
+    void onResponseSuccess(); // make return the arraylist of thingies
 }
