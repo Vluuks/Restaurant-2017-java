@@ -3,7 +3,7 @@ package com.example.gebruiker.restaurantapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements ResponseCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,4 +14,10 @@ public class MenuActivity extends AppCompatActivity {
     public void getMenu() {
 
     }
+
+    @Override
+    public void onResponseSuccess() {
+
+    }
+
 }
