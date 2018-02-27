@@ -12,13 +12,23 @@ public class MenuItem implements Serializable {
     private int id;
     private String name, category, description;
     private URL imageUrl;
+    private float price;
 
-    public MenuItem(int id, String name, String category, String description, URL imageUrl) {
+    public MenuItem(int id, String name, String category, String description, URL imageUrl, float price) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.price = price;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public int getId() {
