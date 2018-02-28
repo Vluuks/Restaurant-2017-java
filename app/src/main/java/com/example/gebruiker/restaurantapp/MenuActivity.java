@@ -1,11 +1,8 @@
 package com.example.gebruiker.restaurantapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +18,10 @@ import java.util.ArrayList;
 /**
  *  Contains an overview of the items that belong to a certain category. Redirecting to a page
  *  that allows ordering and more information upon click.
+ *
+ *  TODO add loading dialogs
+ *  TODO change top bar to show current page
+ *  TODO add menu that lets you go to your order directly
  */
 public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.ResponseCallback {
 
@@ -35,7 +36,7 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
         String category = intent.getStringExtra("category");
 
         RestaurantApiHelper helper = new RestaurantApiHelper(this);
-        helper.getCategoryMenuItems(category);
+        helper.getCategoryMenuItemsAnon(category, this);
     }
 
     @Override
@@ -82,8 +83,6 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
                     // add to database
                 }
             });
-
-
 
             // Create the AlertDialog.
             AlertDialog dialog = builder.create();

@@ -15,8 +15,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
-
 /**
  *  Helper class that handles the calls to the restaurant API. It can retrieve all menu items of
  *  a certain category and the list of available categories.
@@ -26,6 +24,14 @@ public class RestaurantApiHelper {
     // Handles callback to the activity.
     public interface ResponseCallback {
         void onResponseSuccess(ArrayList<?> responseList);
+    }
+
+    public interface CategoriesCallback {
+        void onResponseSuccess(ArrayList<String> responseList);
+    }
+
+    public interface MenuItemsCallback {
+        void onResponseSuccess(ArrayList<MenuItem> responseList);
     }
 
     private static final String TAG = "RestaurantApi";
@@ -52,6 +58,20 @@ public class RestaurantApiHelper {
     }
 
     /**
+     *  Retrieves all available categories from the API.
+     */
+    public void getCategoriesAnon() {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url ="https://resto.mprog.nl/categories";
+
+        // Request a string response from the provided URL.
+        JsonResponseCategoryListener listener = new JsonResponseCategoryListener();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, listener, listener);
+        queue.add(jsonObjectRequest);
+    }
+
+    /**
      *  Retrieves menu items that belong to a certain category as specified by parameter.
      */
     public void getCategoryMenuItems(String category) {
@@ -62,6 +82,35 @@ public class RestaurantApiHelper {
         // Request a string response from the provided URL.
         JsonResponseMenuListener listener = new JsonResponseMenuListener();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, listener, listener);
+        queue.add(jsonObjectRequest);
+    }
+
+
+    /**
+     *  Retrieves menu items that belong to a certain category as specified by parameter.
+     */
+    public void getCategoryMenuItemsAnon(String category, final RestaurantApiHelper.ResponseCallback callbackHandler) {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://resto.mprog.nl/menu?category=" + category;
+
+        // Request a string response from the provided URL.
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                ArrayList<MenuItem> menuItems = parseMenuItemJson(response);
+                callbackHandler.onResponseSuccess(menuItems);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        };
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, responseListener, errorListener);
         queue.add(jsonObjectRequest);
     }
 
