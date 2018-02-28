@@ -1,9 +1,15 @@
 package com.example.gebruiker.restaurantapp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -42,6 +48,12 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Log.d("test", "item clicked");
+
+            Intent intent = new Intent(MenuActivity.this, DetailActivity.class);
+
         }
     }
 }
+
+
+
