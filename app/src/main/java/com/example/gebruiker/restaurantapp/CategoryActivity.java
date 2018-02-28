@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *  Presents an overview of available categories in the menu, redirecting to the list of items
  *  in that category upon click.
  */
-public class CategoryActivity extends AppCompatActivity implements ResponseCallback {
+public class CategoryActivity extends AppCompatActivity implements RestaurantApiHelper.ResponseCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

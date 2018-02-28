@@ -15,11 +15,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
+
 /**
  *  Helper class that handles the calls to the restaurant API. It can retrieve all menu items of
  *  a certain category and the list of available categories.
  */
 public class RestaurantApiHelper {
+
+    // Handles callback to the activity.
+    public interface ResponseCallback {
+        void onResponseSuccess(ArrayList<?> responseList);
+    }
 
     private static final String TAG = "RestaurantApi";
     public ResponseCallback delegate;

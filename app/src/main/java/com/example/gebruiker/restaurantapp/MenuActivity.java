@@ -9,9 +9,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,7 +22,7 @@ import java.util.ArrayList;
  *  Contains an overview of the items that belong to a certain category. Redirecting to a page
  *  that allows ordering and more information upon click.
  */
-public class MenuActivity extends AppCompatActivity implements ResponseCallback {
+public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.ResponseCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,42 +49,45 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
     private class OnMenuItemClickedListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Log.d("test", "item clicked");
 
+            // Set the layout for the dialog.
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.add_item_dialog, null);
+
+            // Set title and description.
+            TextView titleView = dialogView.findViewById(R.id.tvDialogTitle);
+            TextView descriptionView = dialogView.findViewById(R.id.tvDialogContent);
+
+            MenuItem clickedItem = (MenuItem) adapterView.getItemAtPosition(i);
+            titleView.setText(clickedItem.getName());
+            descriptionView.setText(clickedItem.getDescription());
+
+            // Initialize numberpicker.
+            NumberPicker numberPicker = dialogView.findViewById(R.id.dialogNumberPicker);
+            numberPicker.setMaxValue(10);
+            numberPicker.setMinValue(1);
+
+            // Build the AlertDialog.
             AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+            builder.setView(dialogView);
+            builder.setPositiveButton("Add to order", new DialogClickListener());
+            builder.setNegativeButton("Cancel", null);
 
-            builder.setTitle(((MenuItem)adapterView.getItemAtPosition(i)).getName());
-
-            // Add the buttons
-            builder.setPositiveButton("Add to order", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    //dialog.dismiss();
-                }
-            });
-
-            // Create the AlertDialog
+            // Create the AlertDialog.
             AlertDialog dialog = builder.create();
             dialog.show();
 
         }
     }
 
-    private class DialogClickListener implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
-        @Override
-        public void onCancel(DialogInterface dialogInterface) {
-
-        }
+    private class DialogClickListener implements DialogInterface.OnClickListener {
 
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-
+            Log.d("test", Integer.toString(i));
         }
     }
+
 }
 
 
