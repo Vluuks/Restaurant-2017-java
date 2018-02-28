@@ -10,11 +10,10 @@ import java.net.URL;
 public class MenuItem implements Serializable {
 
     private int id;
-    private String name, category, description;
-    private URL imageUrl;
+    private String name, category, description, imageUrl;
     private float price;
 
-    public MenuItem(int id, String name, String category, String description, URL imageUrl, float price) {
+    public MenuItem(int id, String name, String category, String description, String imageUrl, float price) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -63,11 +62,11 @@ public class MenuItem implements Serializable {
         this.description = description;
     }
 
-    public URL getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(URL imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 }

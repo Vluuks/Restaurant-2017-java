@@ -61,7 +61,7 @@ public class RestaurantApiHelper {
                     String name = menuItemJson.getString("name");
                     String description = menuItemJson.getString("description");
                     float price = menuItemJson.getInt("price");
-                    URL imageUrl = new URL(menuItemJson.getString("image_url")));
+                    String imageUrl = menuItemJson.getString("image_url");
                 }
             }
             catch (JSONException e) {
