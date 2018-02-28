@@ -29,7 +29,8 @@ public class CategoryActivity extends AppCompatActivity implements RestaurantApi
     public void onResponseSuccess(ArrayList<?> responseList) {
 
         ListView listView = findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row_item_category, R.id.textView, (ArrayList<String>) responseList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row_item_category,
+                R.id.textView, (ArrayList<String>) responseList);
         OnCategoryClickedListener listener = new OnCategoryClickedListener();
 
         listView.setAdapter(adapter);

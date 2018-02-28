@@ -24,6 +24,8 @@ import java.util.ArrayList;
  */
 public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.ResponseCallback {
 
+    private static final String TAG = "MenuActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,28 +65,30 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
             descriptionView.setText(clickedItem.getDescription());
 
             // Initialize numberpicker.
-            NumberPicker numberPicker = dialogView.findViewById(R.id.dialogNumberPicker);
+            final NumberPicker numberPicker = dialogView.findViewById(R.id.dialogNumberPicker);
             numberPicker.setMaxValue(10);
             numberPicker.setMinValue(1);
 
             // Build the AlertDialog.
             AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
             builder.setView(dialogView);
-            builder.setPositiveButton("Add to order", new DialogClickListener());
             builder.setNegativeButton("Cancel", null);
+            builder.setPositiveButton("Add to order", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    int orderAmount = numberPicker.getValue();
+                    Log.d(TAG, String.valueOf(orderAmount));
+
+                    // add to database
+                }
+            });
+
+
 
             // Create the AlertDialog.
             AlertDialog dialog = builder.create();
             dialog.show();
 
-        }
-    }
-
-    private class DialogClickListener implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            Log.d("test", Integer.toString(i));
         }
     }
 
