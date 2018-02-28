@@ -31,7 +31,7 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
     @Override
     public void onResponseSuccess(ArrayList<?> finishedList) {
         ListView listView = findViewById(R.id.listView);
-        MenuItemAdapter adapter = new MenuItemAdapter(this, R.layout.row_item, (ArrayList<MenuItem>) finishedList);
+        MenuItemAdapter adapter = new MenuItemAdapter(this, R.layout.row_item_menu, (ArrayList<MenuItem>) finishedList);
         OnMenuItemClickedListener listener = new OnMenuItemClickedListener();
 
         listView.setAdapter(adapter);

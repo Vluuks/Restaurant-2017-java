@@ -33,7 +33,7 @@ public class MenuItemAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_item_menu, parent, false);
         }
 
         ImageView image = convertView.findViewById(R.id.ivDishImage);
@@ -43,7 +43,7 @@ public class MenuItemAdapter extends ArrayAdapter {
         MenuItem currentItem = menuItems.get(position);
 
         title.setText(currentItem.getName());
-        price.setText(Float.toString(currentItem.getPrice()));
+        price.setText("€ " + Float.toString(currentItem.getPrice()));
         Picasso.with(context).load(currentItem.getImageUrl()).into(image);
 
         return convertView;

@@ -48,7 +48,6 @@ public class RestaurantApiHelper {
      *  Retrieves menu items that belong to a certain category as specified by parameter.
      */
     public void getCategoryMenuItems(String category) {
-
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://resto.mprog.nl/menu?category=" + category;
@@ -65,7 +64,6 @@ public class RestaurantApiHelper {
     private class JsonResponseCategoryListener implements Response.Listener<JSONObject>, Response.ErrorListener {
         @Override
         public void onResponse(JSONObject response) {
-
             try {
                 ArrayList<String> categories = new ArrayList<>();
                 JSONArray categoryArray = response.getJSONArray("categories");
@@ -127,7 +125,7 @@ public class RestaurantApiHelper {
             }
         }
         catch (JSONException e) {
-            Log.d("JSON", e.toString());
+            Log.d(TAG, e.toString());
         }
 
         return menuItems;
