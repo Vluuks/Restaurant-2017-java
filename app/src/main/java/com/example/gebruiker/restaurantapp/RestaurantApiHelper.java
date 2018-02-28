@@ -51,7 +51,7 @@ public class RestaurantApiHelper {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="https://resto.mprog.nl/menu?category=" + category;
+        String url = "https://resto.mprog.nl/menu?category=" + category;
 
         // Request a string response from the provided URL.
         JsonResponseMenuListener listener = new JsonResponseMenuListener();
@@ -80,8 +80,8 @@ public class RestaurantApiHelper {
         }
 
         @Override
-        public void onErrorResponse(VolleyError error) {
-
+        public void onErrorResponse(VolleyError e) {
+            Log.d(TAG, e.toString());
         }
     }
 
@@ -98,8 +98,8 @@ public class RestaurantApiHelper {
         }
 
         @Override
-        public void onErrorResponse(VolleyError error) {
-
+        public void onErrorResponse(VolleyError e) {
+            Log.d(TAG, e.toString());
         }
     }
 
