@@ -46,7 +46,6 @@ public class RestaurantApiHelper {
         String url ="https://resto.mprog.nl/categories";
 
         // Request a string response from the provided URL.
-        // Request a string response from the provided URL.
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -67,7 +66,7 @@ public class RestaurantApiHelper {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d(TAG, error.toString());
             }
         };
 
@@ -95,7 +94,7 @@ public class RestaurantApiHelper {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d(TAG, error.toString());
             }
         };
 
@@ -126,8 +125,8 @@ public class RestaurantApiHelper {
                 menuItems.add(item);
             }
         }
-        catch (JSONException e) {
-            Log.d(TAG, e.toString());
+        catch (JSONException error) {
+            Log.d(TAG, error.toString());
         }
 
         return menuItems;
