@@ -9,7 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -49,7 +48,26 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Log.d("test", "item clicked");
 
-            Intent intent = new Intent(MenuActivity.this, DetailActivity.class);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+
+            builder.setTitle(((MenuItem)adapterView.getItemAtPosition(i)).getName());
+
+            // Add the buttons
+            builder.setPositiveButton("Add to order", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+
+
+            // Create the AlertDialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
         }
     }
