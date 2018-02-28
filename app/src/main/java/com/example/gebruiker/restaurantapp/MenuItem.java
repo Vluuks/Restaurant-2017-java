@@ -13,6 +13,14 @@ public class MenuItem implements Serializable {
     private String name, category, description, imageUrl;
     private float price;
 
+    public MenuItem(int id, String name, String description, String imageUrl, float price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.price = price;
+    }
+
     public MenuItem(int id, String name, String category, String description, String imageUrl, float price) {
         this.id = id;
         this.name = name;

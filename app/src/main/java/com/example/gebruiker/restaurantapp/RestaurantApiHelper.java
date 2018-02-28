@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -47,30 +48,12 @@ public class RestaurantApiHelper {
     }
 
     private class JsonResponseListener implements Response.Listener<JSONObject>, Response.ErrorListener {
+
         @Override
         public void onResponse(JSONObject response) {
-
-            try {
-                JSONArray items = response.getJSONArray("items");
-                ArrayList<MenuItem> menuItems = new ArrayList<>();
-
-                for (int i = 0; i < items.length(); i++) {
-                    JSONObject menuItemJson = items.getJSONObject(i);
-
-                    int id = menuItemJson.getInt("id");
-                    String name = menuItemJson.getString("name");
-                    String description = menuItemJson.getString("description");
-                    float price = menuItemJson.getInt("price");
-                    String imageUrl = menuItemJson.getString("image_url");
-                }
-            }
-            catch (JSONException e) {
-
-            }
-            delegate.onResponseSuccess();
+            ArrayList<MenuItem> menuItems = parseJson(response);
+            delegate.onResponseSuccess(menuItems);
             Log.d(TAG, "success" + response);
-
-
         }
 
         @Override
@@ -81,5 +64,32 @@ public class RestaurantApiHelper {
 
     public void getAppetizers() {
 
+    }
+
+    private ArrayList<MenuItem> parseJson(JSONObject response) {
+
+        ArrayList<MenuItem> menuItems = new ArrayList<>();
+
+        try {
+            JSONArray items = response.getJSONArray("items");
+
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject menuItemJson = items.getJSONObject(i);
+
+                int id = menuItemJson.getInt("id");
+                String name = menuItemJson.getString("name");
+                String description = menuItemJson.getString("description");
+                float price = menuItemJson.getInt("price");
+                String imageUrl = menuItemJson.getString("image_url");
+
+                MenuItem item = new MenuItem(id, name, description, imageUrl, price);
+                menuItems.add(item);
+            }
+        }
+        catch (JSONException e) {
+            Log.d("JSON", e.toString());
+        }
+
+        return menuItems;
     }
 }

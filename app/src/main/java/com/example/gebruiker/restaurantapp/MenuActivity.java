@@ -3,6 +3,9 @@ package com.example.gebruiker.restaurantapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements ResponseCallback {
 
@@ -15,13 +18,10 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
         helper.getEntrees();
     }
 
-    public void getMenu() {
-
-    }
-
     @Override
-    public void onResponseSuccess() {
-        Log.d("test", "the interface does something yay");
+    public void onResponseSuccess(ArrayList<MenuItem> finishedList) {
+        ListView lv = findViewById(R.id.listView);
+        MenuItemAdapter adapter = new MenuItemAdapter(this, R.layout.row_item, finishedList);
+        lv.setAdapter(adapter);
     }
-
 }
