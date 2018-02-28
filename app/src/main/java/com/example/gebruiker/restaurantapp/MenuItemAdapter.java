@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -17,11 +19,13 @@ import java.util.ArrayList;
  */
 public class MenuItemAdapter extends ArrayAdapter {
 
-    ArrayList<MenuItem> menuItems;
+    private Context context;
+    private ArrayList<MenuItem> menuItems;
 
     public MenuItemAdapter(@NonNull Context context, int resource, @NonNull ArrayList<MenuItem> objects) {
         super(context, resource, objects);
         menuItems = objects;
+        this.context = context;
     }
 
     @NonNull
@@ -37,7 +41,10 @@ public class MenuItemAdapter extends ArrayAdapter {
         TextView price = convertView.findViewById(R.id.tvDishPrice);
 
         MenuItem currentItem = menuItems.get(position);
+
         title.setText(currentItem.getName());
+        price.setText(Float.toString(currentItem.getPrice()));
+        Picasso.with(context).load(currentItem.getImageUrl()).into(image);
 
         return convertView;
     }
