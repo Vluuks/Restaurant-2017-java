@@ -60,14 +60,25 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
+                    //dialog.dismiss();
                 }
             });
-
 
             // Create the AlertDialog
             AlertDialog dialog = builder.create();
             dialog.show();
+
+        }
+    }
+
+    private class DialogClickListener implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
+        @Override
+        public void onCancel(DialogInterface dialogInterface) {
+
+        }
+
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
 
         }
     }
