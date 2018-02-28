@@ -3,6 +3,7 @@ package com.example.gebruiker.restaurantapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,19 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *  Contains an overview of the items that belong to a certain category. Redirecting to a page
@@ -24,6 +37,8 @@ import java.util.ArrayList;
  *  TODO add menu that lets you go to your order directly
  */
 public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.MenuItemsCallback {
+
+    ArrayList<MenuItem> currentOrder = new ArrayList<>();
 
     private static final String TAG = "MenuActivity";
 
@@ -61,7 +76,7 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
             TextView titleView = dialogView.findViewById(R.id.tvDialogTitle);
             TextView descriptionView = dialogView.findViewById(R.id.tvDialogContent);
 
-            MenuItem clickedItem = (MenuItem) adapterView.getItemAtPosition(i);
+            final MenuItem clickedItem = (MenuItem) adapterView.getItemAtPosition(i);
             titleView.setText(clickedItem.getName());
             descriptionView.setText(clickedItem.getDescription());
 
@@ -80,7 +95,13 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
                     int orderAmount = numberPicker.getValue();
                     Log.d(TAG, String.valueOf(orderAmount));
 
-                    // add to database
+                    clickedItem.setQuantity(orderAmount);
+                    currentOrder.add(clickedItem);
+
+                    Log.d("test", currentOrder.toString());
+
+                    saveToSharedPrefs(currentOrder);
+
                 }
             });
 
@@ -90,6 +111,26 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
 
         }
     }
+
+    public void saveToSharedPrefs(ArrayList<MenuItem> orderList) {
+
+        Gson gson = new Gson();
+
+        String test = gson.toJson(orderList, new TypeToken<ArrayList<MenuItem>>() {}.getType());
+        Log.d("json", test);
+
+//        JsonElement element = gson.toJsonTree(orderList, new TypeToken<ArrayList<MenuItem>>() {}.getType());
+//
+//        JsonArray jsonArray = element.getAsJsonArray();
+//        String jsonArrayString = jsonArray.toString();
+//
+//        SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
+//        SharedPreferences.Editor edit = prefs.edit();
+//
+//        edit.putString("orderjson", jsonArrayString);
+//        edit.apply();
+    }
+
 }
 
 

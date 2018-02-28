@@ -9,22 +9,13 @@ import java.net.URL;
 
 public class MenuItem implements Serializable {
 
-    private int id;
+    private int id, quantity;
     private String name, category, description, imageUrl;
     private float price;
 
     public MenuItem(int id, String name, String description, String imageUrl, float price) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.price = price;
-    }
-
-    public MenuItem(int id, String name, String category, String description, String imageUrl, float price) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
         this.description = description;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -76,5 +67,26 @@ public class MenuItem implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
