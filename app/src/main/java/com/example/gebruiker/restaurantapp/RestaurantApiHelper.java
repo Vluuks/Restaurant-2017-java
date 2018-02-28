@@ -23,13 +23,12 @@ public class RestaurantApiHelper {
 
     private String TAG = "RestaurantApi";
 
-    public MenuResponseCallback menuActivityDelegate;
-    public CategoryResponseCallback categoryActivityDelegate;
+    public ResponseCallback delegate;
     private Context context;
 
     public RestaurantApiHelper(Context context) {
         //this.menuActivityDelegate = (MenuResponseCallback) context;
-        this.categoryActivityDelegate = (CategoryResponseCallback) context;
+        this.delegate = (ResponseCallback) context;
         this.context = context;
     }
 
@@ -44,11 +43,11 @@ public class RestaurantApiHelper {
         queue.add(jsonObjectRequest);
     }
 
-    public void getCategoryMenuItems() {
+    public void getCategoryMenuItems(String category) {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="https://resto.mprog.nl/menu?category=entrees";
+        String url ="https://resto.mprog.nl/menu?category=" + category;
 
         // Request a string response from the provided URL.
         JsonResponseMenuListener listener = new JsonResponseMenuListener();
@@ -66,7 +65,7 @@ public class RestaurantApiHelper {
                 for (int i = 0; i < categoryArray.length(); i++) {
                     categories.add(categoryArray.getString(i));
                 }
-                categoryActivityDelegate.onResponseSuccess(categories);
+                delegate.onResponseSuccess(categories);
             }
             catch (JSONException e) {
                 Log.d(TAG, e.toString());
@@ -84,7 +83,7 @@ public class RestaurantApiHelper {
         @Override
         public void onResponse(JSONObject response) {
             ArrayList<MenuItem> menuItems = parseMenuItemJson(response);
-            menuActivityDelegate.onResponseSuccess(menuItems);
+            delegate.onResponseSuccess(menuItems);
             Log.d(TAG, "success" + response);
         }
 
@@ -93,6 +92,7 @@ public class RestaurantApiHelper {
 
         }
     }
+
 
     private ArrayList<MenuItem> parseMenuItemJson(JSONObject response) {
 

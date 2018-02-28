@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class CategoryActivity extends AppCompatActivity implements CategoryResponseCallback {
+public class CategoryActivity extends AppCompatActivity implements ResponseCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +22,10 @@ public class CategoryActivity extends AppCompatActivity implements CategoryRespo
     }
 
     @Override
-    public void onResponseSuccess(ArrayList<?> categoryList) {
+    public void onResponseSuccess(ArrayList<?> responseList) {
 
         ListView listView = findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, (ArrayList<String>) categoryList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, (ArrayList<String>) responseList);
         OnCategoryClickedListener listener = new OnCategoryClickedListener();
 
         listView.setAdapter(adapter);
