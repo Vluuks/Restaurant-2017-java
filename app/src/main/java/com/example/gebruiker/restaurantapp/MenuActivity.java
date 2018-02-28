@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *  TODO change top bar to show current page
  *  TODO add menu that lets you go to your order directly
  */
-public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.ResponseCallback {
+public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.MenuItemsCallback {
 
     private static final String TAG = "MenuActivity";
 
@@ -40,9 +40,9 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
     }
 
     @Override
-    public void onResponseSuccess(ArrayList<?> finishedList) {
+    public void onResponseSuccess(ArrayList<MenuItem> menuItemList) {
         ListView listView = findViewById(R.id.listView);
-        MenuItemAdapter adapter = new MenuItemAdapter(this, R.layout.row_item_menu, (ArrayList<MenuItem>) finishedList);
+        MenuItemAdapter adapter = new MenuItemAdapter(this, R.layout.row_item_menu, menuItemList);
         OnMenuItemClickedListener listener = new OnMenuItemClickedListener();
 
         listView.setAdapter(adapter);
@@ -90,7 +90,6 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
 
         }
     }
-
 }
 
 

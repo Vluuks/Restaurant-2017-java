@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *  Presents an overview of available categories in the menu, redirecting to the list of items
  *  in that category upon click.
  */
-public class CategoryActivity extends AppCompatActivity implements RestaurantApiHelper.ResponseCallback {
+public class CategoryActivity extends AppCompatActivity implements RestaurantApiHelper.CategoriesCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +22,15 @@ public class CategoryActivity extends AppCompatActivity implements RestaurantApi
         setContentView(R.layout.activity_category);
 
         RestaurantApiHelper helper = new RestaurantApiHelper(this);
-        helper.getCategories();
+        helper.getCategoriesAnon(this);
     }
 
     @Override
-    public void onResponseSuccess(ArrayList<?> responseList) {
+    public void onResponseSuccess(ArrayList<String> categoriesList) {
 
         ListView listView = findViewById(R.id.listView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row_item_category,
-                R.id.textView, (ArrayList<String>) responseList);
+                R.id.textView, (ArrayList<String>) categoriesList);
         OnCategoryClickedListener listener = new OnCategoryClickedListener();
 
         listView.setAdapter(adapter);
