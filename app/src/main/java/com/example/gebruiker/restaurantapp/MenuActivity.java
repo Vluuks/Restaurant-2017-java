@@ -3,10 +3,17 @@ package com.example.gebruiker.restaurantapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+/**
+ *  Contains an overview of the items that belong to a certain category. Redirecting to a page
+ *  that allows ordering and more information upon click.
+ */
 public class MenuActivity extends AppCompatActivity implements ResponseCallback {
 
     @Override
@@ -23,8 +30,18 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
 
     @Override
     public void onResponseSuccess(ArrayList<?> finishedList) {
-        ListView lv = findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         MenuItemAdapter adapter = new MenuItemAdapter(this, R.layout.row_item, (ArrayList<MenuItem>) finishedList);
-        lv.setAdapter(adapter);
+        OnMenuItemClickedListener listener = new OnMenuItemClickedListener();
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(listener);
+    }
+
+    private class OnMenuItemClickedListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Log.d("test", "item clicked");
+        }
     }
 }

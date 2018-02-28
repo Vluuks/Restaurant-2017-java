@@ -10,6 +10,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+/**
+ *  Presents an overview of available categories in the menu, redirecting to the list of items
+ *  in that category upon click.
+ */
 public class CategoryActivity extends AppCompatActivity implements ResponseCallback {
 
     @Override

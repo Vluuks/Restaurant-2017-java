@@ -11,12 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by Gebruiker on 27-2-2018.
+ *  Adapter that shows image, title and price of a menu item.
  */
-
 public class MenuItemAdapter extends ArrayAdapter {
 
     ArrayList<MenuItem> menuItems;
