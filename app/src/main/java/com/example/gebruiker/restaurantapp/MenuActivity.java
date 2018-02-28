@@ -2,12 +2,11 @@ package com.example.gebruiker.restaurantapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity implements ResponseCallback {
+public class MenuActivity extends AppCompatActivity implements MenuResponseCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +14,7 @@ public class MenuActivity extends AppCompatActivity implements ResponseCallback 
         setContentView(R.layout.activity_menu);
 
         RestaurantApiHelper helper = new RestaurantApiHelper(this);
-        helper.getEntrees();
+        helper.getCategoryMenuItems();
     }
 
     @Override

@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="Dish Title"
             android:gravity="left|start"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:layout_gravity="center_vertical" />
 
         <TextView
