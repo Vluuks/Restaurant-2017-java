@@ -16,22 +16,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by Gebruiker on 27-2-2018.
+ *  Helper class that handles the calls to the restaurant API. It can retrieve all menu items of
+ *  a certain category and the list of available categories.
  */
-
 public class RestaurantApiHelper {
 
-    private String TAG = "RestaurantApi";
-
+    private static final String TAG = "RestaurantApi";
     public ResponseCallback delegate;
     private Context context;
 
     public RestaurantApiHelper(Context context) {
-        //this.menuActivityDelegate = (MenuResponseCallback) context;
         this.delegate = (ResponseCallback) context;
         this.context = context;
     }
 
+    /**
+     *  Retrieves all available categories from the API.
+     */
     public void getCategories() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -43,6 +44,9 @@ public class RestaurantApiHelper {
         queue.add(jsonObjectRequest);
     }
 
+    /**
+     *  Retrieves menu items that belong to a certain category as specified by parameter.
+     */
     public void getCategoryMenuItems(String category) {
 
         // Instantiate the RequestQueue.
@@ -55,6 +59,9 @@ public class RestaurantApiHelper {
         queue.add(jsonObjectRequest);
     }
 
+    /**
+     *  Listener implementation for category request.
+     */
     private class JsonResponseCategoryListener implements Response.Listener<JSONObject>, Response.ErrorListener {
         @Override
         public void onResponse(JSONObject response) {
@@ -78,6 +85,9 @@ public class RestaurantApiHelper {
         }
     }
 
+    /**
+     *  Listener implementation for menu items of a certain category.
+     */
     private class JsonResponseMenuListener implements Response.Listener<JSONObject>, Response.ErrorListener {
 
         @Override
@@ -93,7 +103,9 @@ public class RestaurantApiHelper {
         }
     }
 
-
+    /**
+     *  Parses the JSONObject containing menu items to an arraylist.
+     */
     private ArrayList<MenuItem> parseMenuItemJson(JSONObject response) {
 
         ArrayList<MenuItem> menuItems = new ArrayList<>();
