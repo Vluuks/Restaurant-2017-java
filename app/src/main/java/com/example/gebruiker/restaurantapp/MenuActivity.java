@@ -15,18 +15,9 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *  Contains an overview of the items that belong to a certain category. Redirecting to a page
@@ -38,7 +29,7 @@ import java.util.HashMap;
  */
 public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.MenuItemsCallback {
 
-    ArrayList<MenuItem> currentOrder = new ArrayList<>();
+    ArrayList<MenuItem> currentOrder;
 
     private static final String TAG = "MenuActivity";
 
@@ -52,6 +43,8 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
 
         RestaurantApiHelper helper = new RestaurantApiHelper(this);
         helper.getCategoryMenuItemsAnon(category, this);
+
+        currentOrder = loadFromSharedPrefs();
     }
 
     @Override
@@ -92,14 +85,10 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
             builder.setPositiveButton("Add to order", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    int orderAmount = numberPicker.getValue();
-                    Log.d(TAG, String.valueOf(orderAmount));
 
+                    int orderAmount = numberPicker.getValue();
                     clickedItem.setQuantity(orderAmount);
                     currentOrder.add(clickedItem);
-
-                    Log.d("test", currentOrder.toString());
-
                     saveToSharedPrefs(currentOrder);
 
                 }
@@ -116,19 +105,29 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
 
         Gson gson = new Gson();
 
-        String test = gson.toJson(orderList, new TypeToken<ArrayList<MenuItem>>() {}.getType());
-        Log.d("json", test);
+        String jsonString = gson.toJson(orderList, new TypeToken<ArrayList<MenuItem>>() {}.getType());
+        Log.d("json", jsonString);
 
-//        JsonElement element = gson.toJsonTree(orderList, new TypeToken<ArrayList<MenuItem>>() {}.getType());
-//
-//        JsonArray jsonArray = element.getAsJsonArray();
-//        String jsonArrayString = jsonArray.toString();
-//
-//        SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
-//        SharedPreferences.Editor edit = prefs.edit();
-//
-//        edit.putString("orderjson", jsonArrayString);
-//        edit.apply();
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString("orderjson", jsonString);
+        editor.apply();
+    }
+
+    public ArrayList<MenuItem> loadFromSharedPrefs() {
+
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
+        String jsonString = prefs.getString("order", null);
+
+        if (jsonString != null) {
+            Gson gson = new Gson();
+            currentOrder = gson.fromJson(jsonString, new TypeToken<ArrayList<MenuItem>>(){}.getType());
+        }
+        else {
+            currentOrder = new ArrayList<>();
+        }
+        return currentOrder;
     }
 
 }
