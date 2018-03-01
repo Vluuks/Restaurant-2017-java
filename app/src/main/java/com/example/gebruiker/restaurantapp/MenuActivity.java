@@ -109,19 +109,18 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
         Gson gson = new Gson();
 
         String jsonString = gson.toJson(orderList, new TypeToken<HashMap<MenuItem, Integer>>() {}.getType());
-        Log.d("json", jsonString);
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putString("orderjson", jsonString);
+        editor.putString("orderJson", jsonString);
         editor.apply();
     }
 
     public HashMap<MenuItem, Integer> loadFromSharedPrefs() {
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
-        String jsonString = prefs.getString("order", null);
+        String jsonString = prefs.getString("orderJson", null);
 
         if (jsonString != null) {
             Gson gson = new Gson();
