@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrderActivity extends AppCompatActivity {
@@ -29,6 +30,12 @@ public class OrderActivity extends AppCompatActivity {
             currentOrder = new HashMap<>();
         }
 
+        ArrayList<MenuItem> orderList = new ArrayList<>();
+
+//        for (int i = 0; i < currentOrder.size(); i++) {
+//            MenuItem item = currentOrder.;
+//
+//        }
 
 
     }

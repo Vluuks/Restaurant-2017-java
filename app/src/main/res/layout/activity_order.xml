@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.example.gebruiker.restaurantapp.OrderActivity">
 
     <ListView
         android:id="@+id/listView"
-        android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_weight="20">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="total price"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btConfirmOrder"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content"
+        android:text="Confirm your Order"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="2"/>
 </LinearLayout>
