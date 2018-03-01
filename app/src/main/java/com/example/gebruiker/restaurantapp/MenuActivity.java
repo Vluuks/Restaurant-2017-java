@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *  Contains an overview of the items that belong to a certain category. Redirecting to a page
@@ -29,7 +30,8 @@ import java.util.ArrayList;
  */
 public class MenuActivity extends AppCompatActivity implements RestaurantApiHelper.MenuItemsCallback {
 
-    ArrayList<MenuItem> currentOrder;
+    //ArrayList<MenuItem> currentOrder;
+    HashMap<MenuItem, Integer> currentOrder;
 
     private static final String TAG = "MenuActivity";
 
@@ -88,7 +90,8 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
 
                     int orderAmount = numberPicker.getValue();
                     clickedItem.setQuantity(orderAmount);
-                    currentOrder.add(clickedItem);
+
+                    currentOrder.put(clickedItem, orderAmount);
                     saveToSharedPrefs(currentOrder);
 
                 }
@@ -101,11 +104,11 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
         }
     }
 
-    public void saveToSharedPrefs(ArrayList<MenuItem> orderList) {
+    public void saveToSharedPrefs(HashMap<MenuItem, Integer> orderList) {
 
         Gson gson = new Gson();
 
-        String jsonString = gson.toJson(orderList, new TypeToken<ArrayList<MenuItem>>() {}.getType());
+        String jsonString = gson.toJson(orderList, new TypeToken<HashMap<MenuItem, Integer>>() {}.getType());
         Log.d("json", jsonString);
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
@@ -115,17 +118,17 @@ public class MenuActivity extends AppCompatActivity implements RestaurantApiHelp
         editor.apply();
     }
 
-    public ArrayList<MenuItem> loadFromSharedPrefs() {
+    public HashMap<MenuItem, Integer> loadFromSharedPrefs() {
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("order", MODE_PRIVATE);
         String jsonString = prefs.getString("order", null);
 
         if (jsonString != null) {
             Gson gson = new Gson();
-            currentOrder = gson.fromJson(jsonString, new TypeToken<ArrayList<MenuItem>>(){}.getType());
+            currentOrder = gson.fromJson(jsonString, new TypeToken<HashMap<MenuItem, Integer>>(){}.getType());
         }
         else {
-            currentOrder = new ArrayList<>();
+            currentOrder = new HashMap<>();
         }
         return currentOrder;
     }
