@@ -32,6 +32,9 @@ public class OrderActivity extends AppCompatActivity {
 
         ArrayList<MenuItem> orderList = new ArrayList<>();
 
+        // get keys of hashmap
+        // add keys to list, with value to propert
+
 //        for (int i = 0; i < currentOrder.size(); i++) {
 //            MenuItem item = currentOrder.;
 //
